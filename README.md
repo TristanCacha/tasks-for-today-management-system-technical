@@ -58,21 +58,6 @@ tasks_for_today.sql   schema and sample records
 database-upgrade-auth-tasks.sql  one-time schema update for older installations
 .env.example          local database settings template (copy to .env)
 ```
-
-## Troubleshooting
-
-- **Database connection error:** start MySQL in XAMPP and check `database.default.*` values in `.env`.
-- **Unknown database:** import `tasks_for_today.sql` first; confirm phpMyAdmin lists `ever_task`.
-- **Table already exists:** the setup SQL is intended for a new database and a one-time import. Do not repeatedly import it over existing assessment data.
-- **Setup page does not appear:** this project database was upgraded already. For another copy of the earlier schema, import `database-upgrade-auth-tasks.sql` once before opening the site.
-- **Today page is empty:** check the imported dates and confirm MySQL time zone is UTC+08:00; the SQL sets this for its import session. The app PHP timezone is also Asia/Manila.
-- **Port 8083 is busy:** choose another port in the direct PHP server command and in `Start-Tasks.cmd` and update `app.baseURL` in `.env` to the same port.
-- **Missing vendor files:** run `composer install` from the project root with network access.
-
-## GitHub readiness
-
-The project has no configured Git remote. Before publishing, keep `.env` out of version control and commit `.env.example`, source files, and the SQL setup file. PHP apps require a PHP-capable host; GitHub Pages only publishes static sites.
-
 ## Project documentation
 
 See [Tasks for Today Project Documentation](Tasks-for-Today-Project-Documentation-Updated.docx) for the setup steps, page descriptions, database schema, and troubleshooting guide.
