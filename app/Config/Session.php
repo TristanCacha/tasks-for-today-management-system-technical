@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Handlers\BaseHandler;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Handlers\FileHandler;
 
 class Session extends BaseConfig
@@ -100,6 +101,18 @@ class Session extends BaseConfig
      * DB Group for the database session.
      */
     public ?string $DBGroup = null;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Vercel's function filesystem is ephemeral. Store production
+        // sessions in MySQL so sign-in survives separate function invocations.
+        if (getenv('VERCEL') === '1') {
+            $this->driver = DatabaseHandler::class;
+            $this->savePath = 'ci_sessions';
+        }
+    }
 
     /**
      * --------------------------------------------------------------------------

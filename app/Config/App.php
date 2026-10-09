@@ -18,6 +18,18 @@ class App extends BaseConfig
      */
     public string $baseURL = 'http://localhost:8083/';
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (getenv('VERCEL') === '1') {
+            $host = getenv('VERCEL_PROJECT_PRODUCTION_URL') ?: getenv('VERCEL_URL');
+            if ($host !== false && $host !== '') {
+                $this->baseURL = 'https://' . rtrim($host, '/') . '/';
+            }
+        }
+    }
+
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.

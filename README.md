@@ -58,10 +58,35 @@ tasks_for_today.sql   schema and sample records
 database-upgrade-auth-tasks.sql  one-time schema update for older installations
 .env.example          local database settings template (copy to .env)
 ```
+## Deploy on Vercel
+
+This project includes a Vercel PHP function entrypoint and routes static assets from `public/`. Vercel uses the community-maintained `vercel-php` runtime for PHP applications. The application still needs an external, hosted MySQL database; a MySQL server running in XAMPP on your computer is not reachable by Vercel.
+
+1. Import the GitHub repository `TristanCacha/tasks-for-today-management-system-technical` into Vercel. Keep the project root at `./` and the preset as **Other**; `vercel.json` provides the PHP runtime and routes.
+2. Provision a hosted MySQL database with a provider that allows connections from Vercel. Review its plan and billing terms before creating it.
+3. In the provider's database console, select the created database and run `database/vercel-schema.sql`. This creates the `users`, `tasks`, and `ci_sessions` tables without demo credentials.
+4. In Vercel, open the project **Settings → Environment Variables** and add `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and `DB_PORT` for Production. Add the same values to Preview only if preview deployments should use that database. Never commit these values or place them in a public file.
+5. Set `CI_ENVIRONMENT` to `production` in Vercel. Redeploy after adding or changing environment variables.
+6. Open the production URL. The first visitor sees **Create your account**; create the owner account, then add tasks in the application.
+
+The Vercel PHP runtime uses a read-only application filesystem, so deployed sessions are stored in the hosted MySQL `ci_sessions` table. The local `.env` remains ignored by Git and is only for the local XAMPP setup.
+
+## Deploy on Vercel
+
+This project includes a Vercel PHP function entrypoint and routes static assets from `public/`. Vercel uses the community-maintained `vercel-php` runtime for PHP applications. The application still needs an external, hosted MySQL database; a MySQL server running in XAMPP on your computer is not reachable by Vercel.
+
+1. Import the GitHub repository `TristanCacha/tasks-for-today-management-system-technical` into Vercel. Keep the project root at `./` and the preset as **Other**; `vercel.json` provides the PHP runtime and routes.
+2. Provision a hosted MySQL database with a provider that allows connections from Vercel. Review its plan and billing terms before creating it.
+3. In the provider's database console, select the created database and run `database/vercel-schema.sql`. This creates the `users`, `tasks`, and `ci_sessions` tables without demo credentials.
+4. In Vercel, open the project **Settings → Environment Variables** and add `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and `DB_PORT` for Production. Add the same values to Preview only if preview deployments should use that database. Never commit these values or place them in a public file.
+5. Set `CI_ENVIRONMENT` to `production` in Vercel. Redeploy after adding or changing environment variables.
+6. Open the production URL. The first visitor sees **Create your account**; create the owner account, then add tasks in the application.
+
+The Vercel PHP runtime uses a read-only application filesystem, so deployed sessions are stored in the hosted MySQL `ci_sessions` table. The local `.env` remains ignored by Git and is only for the local XAMPP setup.
+
 ## Project documentation
 
 See [Tasks for Today Project Documentation](Tasks-for-Today-Project-Documentation-Updated.docx) for the setup steps, page descriptions, database schema, and troubleshooting guide.
-
 
 
 

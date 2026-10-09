@@ -194,6 +194,17 @@ class Database extends Config
     {
         parent::__construct();
 
+        // Vercel environment variable names cannot use CodeIgniter's dotted
+        // setting names, so map the deployed database credentials explicitly.
+        if (getenv('VERCEL') === '1') {
+            $this->default['hostname'] = getenv('DB_HOST') ?: '';
+            $this->default['database'] = getenv('DB_DATABASE') ?: '';
+            $this->default['username'] = getenv('DB_USERNAME') ?: '';
+            $this->default['password'] = getenv('DB_PASSWORD') ?: '';
+            $this->default['port'] = (int) (getenv('DB_PORT') ?: 3306);
+            $this->default['DBDebug'] = false;
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.

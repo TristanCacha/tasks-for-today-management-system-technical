@@ -1,0 +1,12 @@
+.env
+.git
+.local
+/writable
+/tests
+/phpunit*
+/vendor
+/*.docx
+/*.sql
+/database-upgrade-auth-tasks.sql
+/tasks_for_today.sql
+/Start-Tasks.cmd
